@@ -11,12 +11,23 @@ let cardStyle = css`
   position: absolute;
 `;
 
+let titleStyle = css`
+  font-weight: 700;
+  font-size: 16px;
+`;
+
 const MapCard = props => {
-  const { children } = props;
-  return <Card css={cardStyle}>{children}</Card>;
+  const { title, children } = props;
+  return (
+    <Card css={cardStyle}>
+      <p css={titleStyle}>{title}</p>
+      {children}
+    </Card>
+  );
 };
 
 MapCard.propTypes = {
+  title: PropTypes.string.isRequired,
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node])
 };
 

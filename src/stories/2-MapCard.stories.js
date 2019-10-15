@@ -5,4 +5,4 @@ export default {
   title: "MapCard"
 };
 
-export const MapCard = () => <Card>Hello there</Card>;
+export const MapCard = () => <Card title="Card Title">Hello there</Card>;
