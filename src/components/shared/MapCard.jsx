@@ -1,8 +1,9 @@
 /** @jsx jsx */
-import React, { useState } from "react";
+import React from "react";
 import { css, jsx } from "@emotion/core";
 import { Card } from "@blueprintjs/core";
 import PropTypes from "prop-types";
+import { useHover } from "hooks/hooks";
 
 let cardStyle = css`
   background-color: #273d56;
@@ -28,16 +29,11 @@ let titleStyle = css`
 
 const MapCard = props => {
   const { title, children } = props;
-  const [isHover, setHover] = useState(false);
+  const [hoverRef, isHover] = useHover();
 
   return (
     <Card css={cardStyle}>
-      <span
-        css={spanStyle}
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-        style={{ cursor: isHover ? "move" : "default" }}
-      />
+      <span css={spanStyle} ref={hoverRef} style={{ cursor: isHover ? "move" : "default" }} />
       <p css={titleStyle}>{title}</p>
       {children}
     </Card>
