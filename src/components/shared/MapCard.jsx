@@ -11,6 +11,16 @@ let cardStyle = css`
   position: absolute;
 `;
 
+let spanStyle = css`
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 3px 3px 0 0;
+  width: 100%;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.75);
+`;
+
 let titleStyle = css`
   font-weight: 700;
   font-size: 16px;
@@ -20,6 +30,7 @@ const MapCard = props => {
   const { title, children } = props;
   return (
     <Card css={cardStyle}>
+      <span css={spanStyle} />
       <p css={titleStyle}>{title}</p>
       {children}
     </Card>
