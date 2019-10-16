@@ -17,8 +17,6 @@ let divStyle = css`
 
 function App() {
   const [viewport, setViewport] = useState({
-    width: "100%",
-    height: "100%",
     zoom: 1.5
   });
   return (
@@ -30,8 +28,13 @@ function App() {
       </Navbar>
       <ReactMapGL
         {...viewport}
+        width="100%"
+        height="100%"
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
-        onViewportChange={viewport => setViewport(viewport)}
+        onViewportChange={viewport => {
+          console.log(viewport);
+          setViewport(viewport);
+        }}
       />
     </div>
   );
