@@ -9,7 +9,7 @@ let cardStyle = css`
   background-color: #273d56;
   opacity: 0.9;
   color: #fff;
-  display: inline-block;
+  position: fixed;
 `;
 
 let spanStyle = css`
