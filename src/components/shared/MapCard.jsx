@@ -28,13 +28,13 @@ let titleStyle = css`
 `;
 
 const MapCard = props => {
-  const { title, children } = props;
+  const { title, children, ...rest } = props;
   const ref = useRef();
   const hoverStyle = useHover(ref);
   const draggableStyle = useDraggable(ref);
 
   return (
-    <Card css={cardStyle} style={{ ...draggableStyle }}>
+    <Card css={cardStyle} {...rest} style={{ ...draggableStyle }}>
       <span css={spanStyle} ref={ref} style={{ ...hoverStyle }} />
       <p css={titleStyle}>{title}</p>
       {children}
