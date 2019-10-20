@@ -3,7 +3,7 @@ import React from "react";
 import { css, jsx } from "@emotion/core";
 import { Card } from "@blueprintjs/core";
 import PropTypes from "prop-types";
-import { useHover } from "hooks/hooks";
+import { useHover, useDraggable } from "hooks/hooks";
 
 let cardStyle = css`
   background-color: #273d56;
@@ -29,11 +29,12 @@ let titleStyle = css`
 
 const MapCard = props => {
   const { title, children } = props;
-  const [hoverRef, isHover] = useHover();
+  // const [hoverRef, isHover] = useHover();
+  const [draggableRef, draggableStyle] = useDraggable({ top: 0, left: 0 });
 
   return (
-    <Card css={cardStyle}>
-      <span css={spanStyle} ref={hoverRef} style={{ cursor: isHover ? "move" : "default" }} />
+    <Card css={cardStyle} style={{ ...draggableStyle }}>
+      <span css={spanStyle} ref={draggableRef} />
       <p css={titleStyle}>{title}</p>
       {children}
     </Card>
