@@ -31,7 +31,7 @@ const MapCard = props => {
   const { title, children } = props;
   const ref = useRef();
   const hoverStyle = useHover(ref);
-  const draggableStyle = useDraggable(ref, { top: 0, left: 0 });
+  const draggableStyle = useDraggable(ref);
 
   return (
     <Card css={cardStyle} style={{ ...draggableStyle }}>

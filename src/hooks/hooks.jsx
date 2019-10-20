@@ -19,8 +19,8 @@ export const useHover = ref => {
   return { cursor: "move" };
 };
 
-export const useDraggable = (ref, initialPosition) => {
-  const [position, setPosition] = useState(initialPosition);
+export const useDraggable = ref => {
+  const [position, setPosition] = useState();
   const [isDragging, setIsDragging] = useState(false);
   const [mouseOffset, setMouseOffset] = useState();
 
@@ -28,6 +28,7 @@ export const useDraggable = (ref, initialPosition) => {
     setIsDragging(true);
     const rect = event.target.getBoundingClientRect();
     const offset = { top: event.clientY - rect.top, left: event.clientX - rect.left };
+
     setMouseOffset(offset);
   };
 
@@ -61,9 +62,12 @@ export const useDraggable = (ref, initialPosition) => {
     };
   });
 
-  const draggableStyle = {
-    transform: `translate(${position.left}px, ${position.top}px)`,
-    transition: "transform 0.05s cubic-bezier(0.2, 0, 0, 1)"
-  };
-  return draggableStyle;
+  if (position === undefined) {
+    return {};
+  } else {
+    return {
+      transform: `translate(${position.left}px, ${position.top}px)`,
+      transition: "transform 0.05s cubic-bezier(0.2, 0, 0, 1)"
+    };
+  }
 };
