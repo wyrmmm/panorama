@@ -32,7 +32,6 @@ function App() {
         height="100%"
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
         onViewportChange={viewport => {
-          console.log(viewport);
           setViewport(viewport);
         }}
       />
