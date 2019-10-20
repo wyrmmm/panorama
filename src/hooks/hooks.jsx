@@ -28,7 +28,7 @@ export const useDraggable = ref => {
     setIsDragging(true);
     const rect = event.target.getBoundingClientRect();
     const offset = { top: event.clientY - rect.top, left: event.clientX - rect.left };
-
+    setPosition({ top: rect.top, left: rect.left });
     setMouseOffset(offset);
   };
 
