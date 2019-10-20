@@ -1,8 +1,7 @@
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
-export const useHover = () => {
-  const ref = useRef();
-  const [isHover, setHover] = useState(false);
+export const useHover = ref => {
+  const [, setHover] = useState(false);
 
   const enter = () => setHover(true);
   const leave = () => setHover(false);
@@ -17,11 +16,10 @@ export const useHover = () => {
     };
   });
 
-  return [ref, isHover];
+  return { cursor: "move" };
 };
 
-export const useDraggable = initialPosition => {
-  const ref = useRef();
+export const useDraggable = (ref, initialPosition) => {
   const [position, setPosition] = useState(initialPosition);
   const [isDragging, setIsDragging] = useState(false);
   const [mouseOffset, setMouseOffset] = useState();
@@ -67,5 +65,5 @@ export const useDraggable = initialPosition => {
     transform: `translate(${position.left}px, ${position.top}px)`,
     transition: "transform 0.05s cubic-bezier(0.2, 0, 0, 1)"
   };
-  return [ref, draggableStyle, setPosition];
+  return draggableStyle;
 };

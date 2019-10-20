@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import React from "react";
+import React, { useRef } from "react";
 import { css, jsx } from "@emotion/core";
 import { Card } from "@blueprintjs/core";
 import PropTypes from "prop-types";
@@ -29,12 +29,13 @@ let titleStyle = css`
 
 const MapCard = props => {
   const { title, children } = props;
-  // const [hoverRef, isHover] = useHover();
-  const [draggableRef, draggableStyle] = useDraggable({ top: 0, left: 0 });
+  const ref = useRef();
+  const hoverStyle = useHover(ref);
+  const draggableStyle = useDraggable(ref, { top: 0, left: 0 });
 
   return (
     <Card css={cardStyle} style={{ ...draggableStyle }}>
-      <span css={spanStyle} ref={draggableRef} />
+      <span css={spanStyle} ref={ref} style={{ ...hoverStyle }} />
       <p css={titleStyle}>{title}</p>
       {children}
     </Card>
