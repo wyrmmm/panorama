@@ -20,27 +20,53 @@ export const useHover = ref => {
 };
 
 export const useDraggable = ref => {
-  const [position, setPosition] = useState();
+  const [offset, setOffset] = useState({ top: 0, left: 0 });
+  const [origin, setOrigin] = useState();
+  const [start, setStart] = useState();
+  const [translateVector, setTranslateVector] = useState();
   const [isDragging, setIsDragging] = useState(false);
-  const [mouseOffset, setMouseOffset] = useState();
 
   const mousedown = event => {
+    const { top, left } = event.target.getBoundingClientRect();
+    setOrigin({ top, left });
     setIsDragging(true);
-    const rect = event.target.getBoundingClientRect();
-    const offset = { top: event.clientY - rect.top, left: event.clientX - rect.left };
-    setPosition({ top: rect.top, left: rect.left });
-    setMouseOffset(offset);
+    setStart({ top: event.y, left: event.x });
   };
 
   const mousemove = event => {
     if (isDragging) {
-      setPosition({ top: event.clientY - mouseOffset.top, left: event.clientX - mouseOffset.left });
+      // console.log(event);
+      // console.log(
+      //   `top: ${event.y} - ${start.top} + ${origin.top} - ${offset.top} = ${event.y -
+      //     start.top +
+      //     origin.top -
+      //     offset.top}`
+      // );
+      // console.log(
+      //   `left: ${event.x} - ${start.left} + ${origin.left} - ${offset.left} = ${event.x -
+      //     start.left +
+      //     origin.left -
+      //     offset.left}`
+      // );
+      setTranslateVector({
+        top: event.y - start.top + origin.top - offset.top,
+        left: event.x - start.left + origin.left - offset.left
+      });
     }
   };
 
   const mouseup = () => {
     setIsDragging(false);
   };
+
+  useEffect(() => {
+    const { top, left } = ref.current.getBoundingClientRect();
+    console.log(top, left);
+    if (top === 0 && left === 0) {
+      return;
+    }
+    setOffset({ top, left });
+  }, []);
 
   useEffect(() => {
     ref.current.addEventListener("mousedown", mousedown);
@@ -61,12 +87,11 @@ export const useDraggable = ref => {
       document.removeEventListener("mouseup", mouseup);
     };
   });
-
-  if (position === undefined) {
+  if (translateVector === undefined) {
     return {};
   } else {
     return {
-      transform: `translate(${position.left}px, ${position.top}px)`,
+      transform: `translate(${translateVector.left}px, ${translateVector.top}px)`,
       transition: "transform 0.05s cubic-bezier(0.2, 0, 0, 1)"
     };
   }
