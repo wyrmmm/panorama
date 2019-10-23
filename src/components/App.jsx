@@ -7,6 +7,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import "normalize.css";
 import "@blueprintjs/core/lib/css/blueprint.css";
 import "@blueprintjs/icons/lib/css/blueprint-icons.css";
+import MapCard from "components/shared/MapCard";
 
 let divStyle = css`
   width: 100vw;
@@ -35,6 +36,7 @@ function App() {
           setViewport(viewport);
         }}
       />
+      <MapCard title="Tweets">Hello there</MapCard>
     </div>
   );
 }
