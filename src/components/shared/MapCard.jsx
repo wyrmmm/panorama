@@ -35,7 +35,7 @@ const MapCard = props => {
 
   return (
     <Card css={cardStyle} {...rest} style={{ ...draggableStyle }}>
-      <span css={spanStyle} ref={ref} style={{ ...hoverStyle }} />
+      <span css={spanStyle} ref={ref} style={{ ...hoverStyle }} data-testid="mapcard-header" />
       <p css={titleStyle}>{title}</p>
       {children}
     </Card>
