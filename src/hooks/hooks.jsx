@@ -62,7 +62,6 @@ export const useDraggable = ref => {
 
   useEffect(() => {
     const { top, left } = ref.current.getBoundingClientRect();
-    console.log(top, left);
     if (top === 0 && left === 0) {
       return;
     }
