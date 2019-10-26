@@ -7,9 +7,10 @@ import { useHover, useDraggable } from "hooks/hooks";
 
 let cardStyle = css`
   background-color: #273d56;
-  opacity: 0.9;
+  opacity: 0.75;
   color: #fff;
   position: fixed;
+  padding: 30px;
 `;
 
 let spanStyle = css`
