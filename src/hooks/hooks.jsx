@@ -7,12 +7,13 @@ export const useHover = ref => {
   const leave = () => setHover(false);
 
   useEffect(() => {
-    ref.current.addEventListener("mouseenter", enter);
-    ref.current.addEventListener("mouseleave", leave);
+    const currentRef = ref.current;
+    currentRef.addEventListener("mouseenter", enter);
+    currentRef.addEventListener("mouseleave", leave);
 
     return () => {
-      ref.current.removeEventListener("mouseenter", enter);
-      ref.current.removeEventListener("mouseleave", leave);
+      currentRef.removeEventListener("mouseenter", enter);
+      currentRef.removeEventListener("mouseleave", leave);
     };
   });
 
@@ -69,10 +70,11 @@ export const useDraggable = ref => {
   }, []);
 
   useEffect(() => {
-    ref.current.addEventListener("mousedown", mousedown);
+    const currentRef = ref.current;
+    currentRef.addEventListener("mousedown", mousedown);
 
     return () => {
-      ref.current.removeEventListener("mousedown", mousedown);
+      currentRef.removeEventListener("mousedown", mousedown);
     };
   });
 
