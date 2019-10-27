@@ -10,7 +10,7 @@ let cardStyle = css`
   opacity: 0.75;
   color: #fff;
   position: fixed;
-  padding: 30px;
+  padding: 0;
 `;
 
 let spanStyle = css`
@@ -26,6 +26,7 @@ let spanStyle = css`
 let titleStyle = css`
   font-weight: 700;
   font-size: 16px;
+  padding: 30px 30px 0 30px;
 `;
 
 const MapCard = props => {
@@ -36,9 +37,27 @@ const MapCard = props => {
 
   return (
     <Card css={cardStyle} {...rest} style={{ ...draggableStyle }}>
-      <span css={spanStyle} ref={ref} style={{ ...hoverStyle }} data-testid="mapcard-header" />
-      <p css={titleStyle}>{title}</p>
-      {children}
+      <div
+        css={css`
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+        `}
+      >
+        <div>
+          <span css={spanStyle} ref={ref} style={{ ...hoverStyle }} data-testid="mapcard-header" />
+          <p css={titleStyle}>{title}</p>
+        </div>
+        <div
+          css={css`
+            padding: 0 30px 30px 30px;
+            flex: 1;
+            overflow-y: scroll;
+          `}
+        >
+          {children}
+        </div>
+      </div>
     </Card>
   );
 };

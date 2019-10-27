@@ -20,6 +20,7 @@ const mapCardStyle = css`
   top: 72px;
   left: 24px;
   width: 320px;
+  height: 500px;
 `;
 
 const articleStyle = css`
