@@ -13,12 +13,9 @@ const T = new Twit({
 
 T.get(
   "account/verify_credentials",
-  {
-    include_entities: false,
-    skip_status: true,
-    include_email: false
-  },
-  () => {
+  { include_entities: false, skip_status: true, include_email: false },
+  (err, res) => {
+    if (err) throw err;
     console.log("Authentication successful.");
   }
 );
