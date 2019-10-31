@@ -20,5 +20,12 @@ T.get(
   }
 );
 
+app.get("/tweets/trends/:id", (req, res) => {
+  const { id } = req.params;
+  T.get(`https://api.twitter.com/1.1/trends/place.json?id=${id}`, (err, data, response) => {
+    res.send(data);
+  });
+});
+
 const port = process.env.PORT || 3001;
 app.listen(port, () => console.log(`Listening on port ${port}`));
