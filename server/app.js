@@ -20,6 +20,25 @@ T.get(
   }
 );
 
+app.get("/tweets/trends/available", (req, res) => {
+  T.get(`https://api.twitter.com/1.1/trends/available.json`, (err, data, response) => {
+    const allCountries = new Set();
+    const result = [];
+    data.forEach(e => {
+      const { country, name, woeid } = e;
+      if (!allCountries.has(country)) {
+        allCountries.add(country);
+        result.push({ country, id: woeid });
+      }
+    });
+    result.sort((a, b) => {
+      return a.country.localeCompare(b.country);
+    });
+
+    res.send(JSON.stringify(result));
+  });
+});
+
 app.get("/tweets/trends/:id", (req, res) => {
   const { id } = req.params;
   T.get(`https://api.twitter.com/1.1/trends/place.json?id=${id}`, (err, data, response) => {
