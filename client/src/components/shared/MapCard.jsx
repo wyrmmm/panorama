@@ -52,7 +52,7 @@ const MapCard = props => {
           css={css`
             padding: 0 30px 30px 30px;
             flex: 1;
-            overflow-y: scroll;
+            overflow-y: auto;
           `}
         >
           {children}
