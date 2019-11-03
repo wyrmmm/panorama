@@ -35,7 +35,7 @@ export const useDraggable = ref => {
   };
 
   const mousemove = event => {
-    if (isDragging) {
+    if (isDragging && start) {
       // console.log(event);
       // console.log(
       //   `top: ${event.y} - ${start.top} + ${origin.top} - ${offset.top} = ${event.y -
