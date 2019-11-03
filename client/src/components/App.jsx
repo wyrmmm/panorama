@@ -32,22 +32,61 @@ const articleAuthorStyle = css`
   opacity: 0.7;
 `;
 
+const fetchNews = async () => {
+  const response = await fetch(
+    `https://newsapi.org/v2/top-headlines?country=us&apiKey=d23fe148e1be4ca994302165dc4bf4b4`
+  );
+  const json = await response.json();
+  return json.articles;
+};
+
+const fetchCountries = async () => {
+  const response = await fetch(`http://localhost:3001/tweets/trends/available`);
+  const json = await response.json();
+  const countries = {};
+  json.forEach(e => {
+    const { country, id } = e;
+    countries[country] = id;
+  });
+  return countries;
+};
+
+const fetchTrendingTweets = async id => {
+  const response = await fetch(`http://localhost:3001/tweets/trends/${id}`);
+  const json = await response.json();
+  return json[0].trends;
+};
+
 function App() {
   const [viewport, setViewport] = useState({
     zoom: 1.5
   });
   const [latestNews, setLatestNews] = useState([]);
+  const [countries, setCountries] = useState([]);
+  const [currentCountry, setCurrentCountry] = useState();
+  const [trendingTweets, setTrendingTweets] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(
-        `https://newsapi.org/v2/top-headlines?country=us&apiKey=d23fe148e1be4ca994302165dc4bf4b4`
-      );
-      const json = await response.json();
-      setLatestNews(json.articles);
+      const latestNews = await fetchNews();
+      const countries = await fetchCountries();
+      setLatestNews(latestNews);
+      setCountries(countries);
+      setCurrentCountry("");
     };
+
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (currentCountry !== undefined) {
+        const trendingTweets = await fetchTrendingTweets(countries[currentCountry]);
+        setTrendingTweets(trendingTweets);
+      }
+    };
+    fetchData();
+  }, currentCountry);
 
   return (
     <div css={divStyle}>
