@@ -16,11 +16,18 @@ const divStyle = css`
   flex-direction: column;
 `;
 
-const mapCardStyle = css`
+const newsCardStyle = css`
   top: 72px;
   left: 24px;
   width: 320px;
   height: 500px;
+`;
+
+const tweetsCardStyle = css`
+  top: 72px;
+  right: 24px;
+  width: 250px;
+  height: 300px;
 `;
 
 const articleStyle = css`
@@ -104,7 +111,7 @@ function App() {
           setViewport(viewport);
         }}
       />
-      <MapCard css={mapCardStyle} title="Latest News">
+      <MapCard css={newsCardStyle} title="Latest News">
         {latestNews.map((article, index) => {
           const { title: temp } = article;
           const [title, author] = temp.split(" - ");
@@ -115,6 +122,18 @@ function App() {
             </div>
           );
         })}
+      </MapCard>
+      <MapCard css={tweetsCardStyle} title="Trending Tweets">
+        {trendingTweets.map((tweet, index) => (
+          <div
+            key={index}
+            css={css`
+              margin: 12px 0;
+            `}
+          >
+            {tweet.name}
+          </div>
+        ))}
       </MapCard>
     </div>
   );
