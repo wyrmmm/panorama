@@ -93,7 +93,7 @@ function App() {
       }
     };
     fetchData();
-  }, currentCountry);
+  }, [currentCountry]);
 
   return (
     <div css={divStyle}>
