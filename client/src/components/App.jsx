@@ -30,11 +30,23 @@ const tweetsCardStyle = css`
   height: 300px;
 `;
 
+const googleTrendsCardStyle = css`
+  right: 24px;
+  bottom: 48px;
+  width: 250px;
+  height: 300px;
+`;
+
 const articleStyle = css`
   margin: 12px 0 24px 0;
 `;
 
 const articleAuthorStyle = css`
+  font-style: italic;
+  opacity: 0.7;
+`;
+
+const googleTrendsCountStyle = css`
   font-style: italic;
   opacity: 0.7;
 `;
@@ -64,6 +76,12 @@ const fetchTrendingTweets = async id => {
   return json[0].trends;
 };
 
+const fetchGoogleTrends = async location => {
+  const response = await fetch(`http://localhost:3001/googletrends/?location=US`);
+  const json = await response.json();
+  return json;
+};
+
 function App() {
   const [viewport, setViewport] = useState({
     zoom: 1.5
@@ -72,14 +90,17 @@ function App() {
   const [countries, setCountries] = useState([]);
   const [currentCountry, setCurrentCountry] = useState();
   const [trendingTweets, setTrendingTweets] = useState([]);
+  const [googleTrends, setGoogleTrends] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const latestNews = await fetchNews();
       const countries = await fetchCountries();
+      const googleTrends = await fetchGoogleTrends();
       setLatestNews(latestNews);
       setCountries(countries);
       setCurrentCountry("");
+      setGoogleTrends(googleTrends);
     };
 
     fetchData();
@@ -134,6 +155,21 @@ function App() {
             {tweet.name}
           </div>
         ))}
+      </MapCard>
+      <MapCard css={googleTrendsCardStyle} title="Google Trends">
+        {googleTrends.map(({ title, count }, index) => {
+          return (
+            <div
+              key={index}
+              css={css`
+                margin: 12px 0;
+              `}
+            >
+              <div>{title}</div>
+              <div css={googleTrendsCountStyle}>{count}</div>
+            </div>
+          );
+        })}
       </MapCard>
     </div>
   );
