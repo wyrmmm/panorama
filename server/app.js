@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const Twit = require("twit");
 const cors = require("cors");
+const puppeteer = require("puppeteer");
 
 const app = express();
 app.use(express.json());
@@ -47,6 +48,23 @@ app.get("/tweets/trends/:id", (req, res) => {
   T.get(`https://api.twitter.com/1.1/trends/place.json?id=${id}`, (err, data, response) => {
     res.send(data);
   });
+});
+
+app.get("/googletrends/", async (req, res) => {
+  const { location } = req.query;
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.goto(`https://trends.google.com/trends/?geo=${location}`);
+  let texts = await page.evaluate(() => {
+    let data = [];
+    let titles = document.getElementsByClassName("list-item-title");
+    const searches = document.getElementsByClassName("list-item-searches");
+    for (let i = 0; i < titles.length; i++) {
+      data.push({ title: titles[i].textContent, count: searches[i].textContent });
+    }
+    return data;
+  });
+  res.send(texts);
 });
 
 const port = process.env.PORT || 3001;
