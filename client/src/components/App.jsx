@@ -21,7 +21,11 @@ const divStyle = css`
 `;
 
 const App = props => {
-  const { locations, dispatch } = props;
+  const {
+    location: { available: locations },
+    dispatch
+  } = props;
+
   const [viewport, setViewport] = useState({
     zoom: 1.5
   });
@@ -68,7 +72,7 @@ const App = props => {
 
 const mapStateToProps = state => {
   return {
-    locations: state.locations
+    location: state.location
   };
 };
 

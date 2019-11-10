@@ -1,8 +1,9 @@
+import { combineReducers } from "redux";
 import { SET_LOCATION } from "actions/actions";
 
-const initialState = {
-  currentLocation: "United States",
-  locations: [
+const locationInitialState = {
+  current: "United States",
+  available: [
     "Afghanistan",
     "Åland Islands",
     "Albania",
@@ -255,14 +256,17 @@ const initialState = {
   ]
 };
 
-const rootReducer = (state = initialState, action) => {
+const location = (state = locationInitialState, action) => {
   switch (action.type) {
     case SET_LOCATION:
-      return Object.assign({}, state, { currentLocation: action.location });
+      return Object.assign({}, state, { current: action.location });
     default:
-      break;
+      return state;
   }
-  return state;
 };
+
+const rootReducer = combineReducers({
+  location
+});
 
 export default rootReducer;
