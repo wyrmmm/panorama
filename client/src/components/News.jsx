@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import { css, jsx } from "@emotion/core";
 import MapCard from "components/shared/MapCard";
 
@@ -27,7 +28,8 @@ const fetchNews = async () => {
   return json.articles;
 };
 
-const News = () => {
+const News = props => {
+  const { currentLocation } = props;
   const [latestNews, setLatestNews] = useState([]);
 
   useEffect(() => {
@@ -55,4 +57,10 @@ const News = () => {
   );
 };
 
-export default News;
+const mapStateToProps = state => {
+  return {
+    currentLocation: state.currentLocation
+  };
+};
+
+export default connect(mapStateToProps)(News);

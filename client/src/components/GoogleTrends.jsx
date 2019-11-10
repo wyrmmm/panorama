@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import { css, jsx } from "@emotion/core";
 import MapCard from "components/shared/MapCard";
 
@@ -21,7 +22,8 @@ const fetchGoogleTrends = async location => {
   return json;
 };
 
-const GoogleTrends = () => {
+const GoogleTrends = props => {
+  const { currentLocation } = props;
   const [googleTrends, setGoogleTrends] = useState([]);
 
   useEffect(() => {
@@ -52,4 +54,10 @@ const GoogleTrends = () => {
   );
 };
 
-export default GoogleTrends;
+const mapStateToProps = state => {
+  return {
+    currentLocation: state.currentLocation
+  };
+};
+
+export default connect(mapStateToProps)(GoogleTrends);

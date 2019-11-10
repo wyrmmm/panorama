@@ -1,3 +1,5 @@
+import { SET_LOCATION } from "actions/actions";
+
 const initialState = {
   currentLocation: "United States",
   locations: [
@@ -254,6 +256,12 @@ const initialState = {
 };
 
 const rootReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case SET_LOCATION:
+      return Object.assign({}, state, { currentLocation: action.location });
+    default:
+      break;
+  }
   return state;
 };
 

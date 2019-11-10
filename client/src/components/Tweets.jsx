@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import { css, jsx } from "@emotion/core";
 import MapCard from "components/shared/MapCard";
 
@@ -27,7 +28,8 @@ const fetchTrendingTweets = async id => {
   return json[0].trends;
 };
 
-const Tweets = () => {
+const Tweets = props => {
+  const { currentLocation } = props;
   const [countries, setCountries] = useState([]);
   const [currentCountry, setCurrentCountry] = useState();
   const [trendingTweets, setTrendingTweets] = useState([]);
@@ -68,4 +70,10 @@ const Tweets = () => {
   );
 };
 
-export default Tweets;
+const mapStateToProps = state => {
+  return {
+    currentLocation: state.currentLocation
+  };
+};
+
+export default connect(mapStateToProps)(Tweets);
