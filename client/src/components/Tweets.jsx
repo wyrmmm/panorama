@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { css, jsx } from "@emotion/core";
 import MapCard from "components/shared/MapCard";
+import { fetchTwitterCountries } from "actions/actions";
 
 const tweetsCardStyle = css`
   top: 72px;
@@ -11,17 +12,6 @@ const tweetsCardStyle = css`
   height: 300px;
 `;
 
-const fetchCountries = async () => {
-  const response = await fetch(`http://localhost:3001/tweets/trends/available`);
-  const json = await response.json();
-  const countries = {};
-  json.forEach(e => {
-    const { country, id } = e;
-    countries[country] = id;
-  });
-  return countries;
-};
-
 const fetchTrendingTweets = async id => {
   const response = await fetch(`http://localhost:3001/tweets/trends/${id}`);
   const json = await response.json();
@@ -29,34 +19,30 @@ const fetchTrendingTweets = async id => {
 };
 
 const Tweets = props => {
-  const { currentLocation } = props;
-  const [countries, setCountries] = useState([]);
-  const [currentCountry, setCurrentCountry] = useState();
-  const [trendingTweets, setTrendingTweets] = useState([]);
+  const { tweets, dispatch, currentLocation } = props;
+  console.log(tweets);
+  console.log(`currentLocation: ${currentLocation}`);
+  // const [countries, setCountries] = useState([]);
+  // const [currentCountry, setCurrentCountry] = useState();
+  // const [trendingTweets, setTrendingTweets] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const countries = await fetchCountries();
-      setCountries(countries);
-      setCurrentCountry("");
-    };
-
-    fetchData();
+    dispatch(fetchTwitterCountries());
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (currentCountry !== undefined) {
-        const trendingTweets = await fetchTrendingTweets(countries[currentCountry]);
-        setTrendingTweets(trendingTweets);
-      }
-    };
-    fetchData();
-  }, [currentCountry]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     if (currentCountry !== undefined) {
+  //       const trendingTweets = await fetchTrendingTweets(countries[currentCountry]);
+  //       setTrendingTweets(trendingTweets);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [currentCountry]);
 
   return (
     <MapCard css={tweetsCardStyle} title="Trending Tweets">
-      {trendingTweets.map((tweet, index) => (
+      {/* {trendingTweets.map((tweet, index) => (
         <div
           key={index}
           css={css`
@@ -65,14 +51,15 @@ const Tweets = props => {
         >
           {tweet.name}
         </div>
-      ))}
+      ))} */}
     </MapCard>
   );
 };
 
 const mapStateToProps = state => {
   return {
-    currentLocation: state.currentLocation
+    currentLocation: state.location.current,
+    tweets: state.tweets
   };
 };
 
