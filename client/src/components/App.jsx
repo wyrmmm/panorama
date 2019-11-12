@@ -22,7 +22,7 @@ const divStyle = css`
 
 const App = props => {
   const {
-    countries: { available: countries },
+    countries: { current: currentCountry, available: countries },
     dispatch
   } = props;
 
@@ -44,7 +44,7 @@ const App = props => {
             Location
           </span>
           <div className="bp3-select">
-            <select>
+            <select defaultValue={currentCountry}>
               {Object.keys(countries).map((country, index) => (
                 <option key={index} onClick={() => dispatch(setCountry(country))}>
                   {country}
