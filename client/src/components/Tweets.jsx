@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { css, jsx } from "@emotion/core";
 import MapCard from "components/shared/MapCard";
-import { fetchTwitterCountries } from "actions/actions";
+import { fetchTrendingTweets } from "actions/actions";
 
 const tweetsCardStyle = css`
   top: 72px;
@@ -12,37 +12,20 @@ const tweetsCardStyle = css`
   height: 300px;
 `;
 
-const fetchTrendingTweets = async id => {
-  const response = await fetch(`http://localhost:3001/tweets/trends/${id}`);
-  const json = await response.json();
-  return json[0].trends;
-};
-
 const Tweets = props => {
-  const { tweets, dispatch, currentCountry } = props;
-  console.log(tweets);
-  console.log(`currentCountry: ${currentCountry}`);
-  // const [countries, setCountries] = useState([]);
-  // const [currentCountry, setCurrentCountry] = useState();
-  // const [trendingTweets, setTrendingTweets] = useState([]);
+  const {
+    tweets,
+    dispatch,
+    countries: { current: currentCountry, available: countries }
+  } = props;
 
   useEffect(() => {
-    dispatch(fetchTwitterCountries());
+    dispatch(fetchTrendingTweets(countries[currentCountry]));
   }, []);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     if (currentCountry !== undefined) {
-  //       const trendingTweets = await fetchTrendingTweets(countries[currentCountry]);
-  //       setTrendingTweets(trendingTweets);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [currentCountry]);
 
   return (
     <MapCard css={tweetsCardStyle} title="Trending Tweets">
-      {/* {trendingTweets.map((tweet, index) => (
+      {tweets.data.map((tweet, index) => (
         <div
           key={index}
           css={css`
@@ -51,14 +34,14 @@ const Tweets = props => {
         >
           {tweet.name}
         </div>
-      ))} */}
+      ))}
     </MapCard>
   );
 };
 
 const mapStateToProps = state => {
   return {
-    currentCountry: state.countries.current,
+    countries: state.countries,
     tweets: state.tweets
   };
 };

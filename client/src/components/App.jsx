@@ -45,9 +45,9 @@ const App = props => {
           </span>
           <div className="bp3-select">
             <select>
-              {countries.map((country, index) => (
+              {Object.keys(countries).map((country, index) => (
                 <option key={index} onClick={() => dispatch(setCountry(country))}>
-                  {country.name}
+                  {country}
                 </option>
               ))}
             </select>
