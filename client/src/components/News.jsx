@@ -1,8 +1,9 @@
 /** @jsx jsx */
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { css, jsx } from "@emotion/core";
 import MapCard from "components/shared/MapCard";
+import { fetchNews } from "actions/actions";
 
 const newsCardStyle = css`
   top: 72px;
@@ -20,30 +21,21 @@ const articleAuthorStyle = css`
   opacity: 0.7;
 `;
 
-const fetchNews = async () => {
-  const response = await fetch(
-    `https://newsapi.org/v2/top-headlines?country=us&apiKey=d23fe148e1be4ca994302165dc4bf4b4`
-  );
-  const json = await response.json();
-  return json.articles;
-};
-
 const News = props => {
-  const { currentLocation } = props;
-  const [latestNews, setLatestNews] = useState([]);
+  const {
+    dispatch,
+    countries: { current: currentCountry, available: countries },
+    news
+  } = props;
 
   useEffect(() => {
-    const fetchData = async () => {
-      const latestNews = await fetchNews();
-      setLatestNews(latestNews);
-    };
-
-    fetchData();
-  }, []);
+    const countryCode = countries[currentCountry]["ISO-3166"];
+    dispatch(fetchNews(countryCode));
+  }, [currentCountry]);
 
   return (
     <MapCard css={newsCardStyle} title="Latest News">
-      {latestNews.map((article, index) => {
+      {news.data.map((article, index) => {
         const { title: temp } = article;
         const [title, author] = temp.split(" - ");
         return (
@@ -59,7 +51,8 @@ const News = props => {
 
 const mapStateToProps = state => {
   return {
-    currentLocation: state.currentLocation
+    countries: state.countries,
+    news: state.news
   };
 };
 
