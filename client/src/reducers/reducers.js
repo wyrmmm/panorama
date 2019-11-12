@@ -72,12 +72,12 @@ const twitterCountries = {
   Vietnam: 1236594
 };
 
-const locationInitialState = {
+const countriesInitialState = {
   current: "Worldwide",
   available: twitterCountries
 };
 
-const countries = (state = locationInitialState, action) => {
+const countries = (state = countriesInitialState, action) => {
   switch (action.type) {
     case SET_LOCATION:
       return Object.assign({}, state, { current: action.payload });
