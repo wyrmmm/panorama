@@ -20,7 +20,7 @@ const Tweets = props => {
   } = props;
 
   useEffect(() => {
-    dispatch(fetchTrendingTweets(countries[currentCountry]));
+    dispatch(fetchTrendingTweets(countries[currentCountry].id));
   }, [currentCountry]);
 
   return (
