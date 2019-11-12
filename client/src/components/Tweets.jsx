@@ -21,7 +21,7 @@ const Tweets = props => {
 
   useEffect(() => {
     dispatch(fetchTrendingTweets(countries[currentCountry]));
-  }, []);
+  }, [currentCountry]);
 
   return (
     <MapCard css={tweetsCardStyle} title="Trending Tweets">
