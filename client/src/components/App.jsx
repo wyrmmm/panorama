@@ -11,7 +11,7 @@ import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import News from "components/News";
 import Tweets from "components/Tweets";
 import GoogleTrends from "components/GoogleTrends";
-import { setLocation } from "actions/actions";
+import { setCountry } from "actions/actions";
 
 const divStyle = css`
   width: 100vw;
@@ -22,7 +22,7 @@ const divStyle = css`
 
 const App = props => {
   const {
-    location: { available: locations },
+    countries: { available: countries },
     dispatch
   } = props;
 
@@ -45,9 +45,9 @@ const App = props => {
           </span>
           <div className="bp3-select">
             <select>
-              {locations.map((location, index) => (
-                <option key={index} onClick={() => dispatch(setLocation(location))}>
-                  {location}
+              {countries.map((country, index) => (
+                <option key={index} onClick={() => dispatch(setCountry(country))}>
+                  {country.name}
                 </option>
               ))}
             </select>
@@ -72,7 +72,7 @@ const App = props => {
 
 const mapStateToProps = state => {
   return {
-    location: state.location
+    countries: state.countries
   };
 };
 

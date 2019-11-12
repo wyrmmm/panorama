@@ -19,9 +19,9 @@ const fetchTrendingTweets = async id => {
 };
 
 const Tweets = props => {
-  const { tweets, dispatch, currentLocation } = props;
+  const { tweets, dispatch, currentCountry } = props;
   console.log(tweets);
-  console.log(`currentLocation: ${currentLocation}`);
+  console.log(`currentCountry: ${currentCountry}`);
   // const [countries, setCountries] = useState([]);
   // const [currentCountry, setCurrentCountry] = useState();
   // const [trendingTweets, setTrendingTweets] = useState([]);
@@ -58,7 +58,7 @@ const Tweets = props => {
 
 const mapStateToProps = state => {
   return {
-    currentLocation: state.location.current,
+    currentCountry: state.countries.current,
     tweets: state.tweets
   };
 };

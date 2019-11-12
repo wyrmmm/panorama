@@ -3,8 +3,8 @@ export const FETCH_TWITTER_COUNTRIES_PENDING = "FETCH_TWITTER_COUNTRIES_PENDING"
 export const FETCH_TWITTER_COUNTRIES_SUCCESS = "FETCH_TWITTER_COUNTRIES_SUCCESS";
 export const FETCH_TWITTER_COUNTRIES_ERROR = "FETCH_TWITTER_COUNTRIES_ERROR";
 
-export const setLocation = location => {
-  return { type: SET_LOCATION, location };
+export const setCountry = country => {
+  return { type: SET_LOCATION, payload: country };
 };
 
 export const fetchTwitterCountriesPending = () => {
