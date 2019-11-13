@@ -6,7 +6,10 @@ import {
   FETCH_TRENDING_TWEETS_ERROR,
   FETCH_NEWS_PENDING,
   FETCH_NEWS_SUCCESS,
-  FETCH_NEWS_ERROR
+  FETCH_NEWS_ERROR,
+  FETCH_GOOGLE_TRENDS_PENDING,
+  FETCH_GOOGLE_TRENDS_SUCCESS,
+  FETCH_GOOGLE_TRENDS_ERROR
 } from "actions/actions";
 
 const lookupCountries = {
@@ -120,10 +123,30 @@ const news = (state = newsInitialState, action) => {
   }
 };
 
+const googleTrendsInitialState = {
+  pending: false,
+  data: [],
+  error: null
+};
+
+const googleTrends = (state = googleTrendsInitialState, action) => {
+  switch (action.type) {
+    case FETCH_GOOGLE_TRENDS_PENDING:
+      return { ...state, pending: true, error: null };
+    case FETCH_GOOGLE_TRENDS_SUCCESS:
+      return { ...state, pending: false, data: action.payload, receivedAt: action.receivedAt, error: null };
+    case FETCH_GOOGLE_TRENDS_ERROR:
+      return { ...state, pending: false, error: action.error };
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
   countries,
   tweets,
-  news
+  news,
+  googleTrends
 });
 
 export default rootReducer;

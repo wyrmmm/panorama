@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { css, jsx } from "@emotion/core";
 import MapCard from "components/shared/MapCard";
+import { fetchGoogleTrends } from "actions/actions";
 
 const googleTrendsCardStyle = css`
   right: 24px;
@@ -16,28 +17,21 @@ const googleTrendsCountStyle = css`
   opacity: 0.7;
 `;
 
-const fetchGoogleTrends = async location => {
-  const response = await fetch(`http://localhost:3001/googletrends/?location=US`);
-  const json = await response.json();
-  return json;
-};
-
 const GoogleTrends = props => {
-  const { currentLocation } = props;
-  const [googleTrends, setGoogleTrends] = useState([]);
+  const {
+    googleTrends,
+    dispatch,
+    countries: { current: currentCountry, available: countries }
+  } = props;
 
   useEffect(() => {
-    const fetchData = async () => {
-      const googleTrends = await fetchGoogleTrends();
-      setGoogleTrends(googleTrends);
-    };
-
-    fetchData();
-  }, []);
+    const countryCode = countries[currentCountry]["ISO-3166"].toUpperCase();
+    dispatch(fetchGoogleTrends(countryCode));
+  }, [currentCountry]);
 
   return (
     <MapCard css={googleTrendsCardStyle} title="Google Trends">
-      {googleTrends.map(({ title, count }, index) => {
+      {googleTrends.data.map(({ title, count }, index) => {
         return (
           <div
             key={index}
@@ -56,7 +50,8 @@ const GoogleTrends = props => {
 
 const mapStateToProps = state => {
   return {
-    currentLocation: state.currentLocation
+    countries: state.countries,
+    googleTrends: state.googleTrends
   };
 };
 
