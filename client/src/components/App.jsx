@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { css, jsx } from "@emotion/core";
 import { Navbar, Alignment } from "@blueprintjs/core";
-import ReactMapGL from "react-map-gl";
+import ReactMapGL, { FlyToInterpolator } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "normalize.css";
 import "@blueprintjs/core/lib/css/blueprint.css";
@@ -27,8 +27,23 @@ const App = props => {
   } = props;
 
   const [viewport, setViewport] = useState({
-    zoom: 1.5
+    latitude: countries[currentCountry]["lat"],
+    longitude: countries[currentCountry]["lng"],
+    zoom: 5,
+    bearing: 0,
+    pitch: 0,
+    transitionInterpolator: new FlyToInterpolator({ speed: 2 }),
+    transitionDuration: 2000
   });
+
+  const [previousCountry, setPreviousCountry] = useState(currentCountry);
+
+  if (currentCountry !== previousCountry) {
+    setPreviousCountry(currentCountry);
+    const latitude = countries[currentCountry]["lat"];
+    const longitude = countries[currentCountry]["lng"];
+    setViewport({ ...viewport, latitude, longitude });
+  }
 
   return (
     <div css={divStyle}>
