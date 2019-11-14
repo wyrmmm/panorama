@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { css, jsx } from "@emotion/core";
 import MapCard from "components/shared/MapCard";
 import { fetchGoogleTrends } from "actions/actions";
+import { Spinner } from "@blueprintjs/core";
 
 const googleTrendsCardStyle = css`
   right: 24px;
@@ -28,6 +29,27 @@ const GoogleTrends = props => {
     const countryCode = countries[currentCountry]["ISO-3166"].toUpperCase();
     dispatch(fetchGoogleTrends(countryCode));
   }, [currentCountry]);
+
+  const { pending, error } = googleTrends;
+  if (pending) {
+    return (
+      <MapCard css={googleTrendsCardStyle} title="Trending Tweets">
+        <Spinner
+          css={css`
+            height: 100%;
+          `}
+        />
+      </MapCard>
+    );
+  }
+
+  if (error) {
+    return (
+      <MapCard css={googleTrendsCardStyle} title="Trending Tweets">
+        Unable to fetch data for this country.
+      </MapCard>
+    );
+  }
 
   return (
     <MapCard css={googleTrendsCardStyle} title="Google Trends">

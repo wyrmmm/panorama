@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { css, jsx } from "@emotion/core";
 import MapCard from "components/shared/MapCard";
 import { fetchTrendingTweets } from "actions/actions";
+import { Spinner } from "@blueprintjs/core";
 
 const tweetsCardStyle = css`
   top: 72px;
@@ -22,6 +23,27 @@ const Tweets = props => {
   useEffect(() => {
     dispatch(fetchTrendingTweets(countries[currentCountry].id));
   }, [currentCountry]);
+
+  const { pending, error } = tweets;
+  if (pending) {
+    return (
+      <MapCard css={tweetsCardStyle} title="Trending Tweets">
+        <Spinner
+          css={css`
+            height: 100%;
+          `}
+        />
+      </MapCard>
+    );
+  }
+
+  if (error) {
+    return (
+      <MapCard css={tweetsCardStyle} title="Trending Tweets">
+        Unable to fetch data for this country.
+      </MapCard>
+    );
+  }
 
   return (
     <MapCard css={tweetsCardStyle} title="Trending Tweets">

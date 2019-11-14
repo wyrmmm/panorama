@@ -31,7 +31,7 @@ export const fetchTrendingTweetsError = error => {
 
 export const fetchTrendingTweets = id => {
   return async dispatch => {
-    dispatch(fetchTrendingTweetsPending);
+    dispatch(fetchTrendingTweetsPending());
 
     try {
       const response = await fetch(`http://localhost:3001/tweets/trends/${id}`);
