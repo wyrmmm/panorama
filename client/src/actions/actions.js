@@ -65,9 +65,7 @@ export const fetchNews = countryCode => {
   return async dispatch => {
     dispatch(fetchNewsPending());
     try {
-      const response = await fetch(
-        `https://newsapi.org/v2/top-headlines?country=${countryCode}&apiKey=d23fe148e1be4ca994302165dc4bf4b4`
-      );
+      const response = await fetch(`http://localhost:3001/news/?country=${countryCode}`);
       const json = await response.json();
       const articles = json.articles;
       dispatch(fetchNewsSuccess(articles));

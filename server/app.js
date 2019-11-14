@@ -3,6 +3,7 @@ const express = require("express");
 const Twit = require("twit");
 const cors = require("cors");
 const puppeteer = require("puppeteer");
+const request = require("request-promise");
 
 const app = express();
 app.use(express.json());
@@ -23,6 +24,19 @@ T.get(
     console.log("Authentication successful.");
   }
 );
+
+app.get("/news/", async (req, res) => {
+  const { country } = req.query;
+  console.log(country);
+  const options = {
+    method: "GET",
+    uri: `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=${process.env.GOOGLE_NEWS_API_KEY}`,
+    json: true
+  };
+  request(options).then(response => {
+    res.send(response);
+  });
+});
 
 app.get("/tweets/trends/available", (req, res) => {
   T.get(`https://api.twitter.com/1.1/trends/available.json`, (err, data, response) => {
