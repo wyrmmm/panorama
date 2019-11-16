@@ -4,10 +4,12 @@ const Twit = require("twit");
 const cors = require("cors");
 const puppeteer = require("puppeteer");
 const request = require("request-promise");
+const path = require("path");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(express.static(path.join(__dirname, "../client/build")));
 
 const T = new Twit({
   consumer_key: process.env.TWITTER_CONSUMER_KEY,
@@ -27,7 +29,6 @@ T.get(
 
 app.get("/news/", async (req, res) => {
   const { country } = req.query;
-  console.log(country);
   const options = {
     method: "GET",
     uri: `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=${process.env.GOOGLE_NEWS_API_KEY}`,
