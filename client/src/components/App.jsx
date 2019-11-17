@@ -61,11 +61,9 @@ const App = props => {
             Location
           </span>
           <div className="bp3-select">
-            <select defaultValue={currentCountry}>
+            <select defaultValue={currentCountry} onChange={event => dispatch(setCountry(event.target.value))}>
               {Object.keys(countries).map((country, index) => (
-                <option key={index} onClick={() => dispatch(setCountry(country))}>
-                  {country}
-                </option>
+                <option key={index}>{country}</option>
               ))}
             </select>
           </div>
