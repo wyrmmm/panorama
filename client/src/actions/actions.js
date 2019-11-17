@@ -34,7 +34,7 @@ export const fetchTrendingTweets = id => {
     dispatch(fetchTrendingTweetsPending());
 
     try {
-      const response = await fetch(`http://localhost:3001/tweets/trends/${id}`);
+      const response = await fetch(`https://www.trendsaroundtheworld.com/tweets/trends/${id}`);
       const json = await response.json();
       const tweets = json[0].trends;
       dispatch(fetchTrendingTweetsSuccess(tweets));
@@ -65,7 +65,7 @@ export const fetchNews = countryCode => {
   return async dispatch => {
     dispatch(fetchNewsPending());
     try {
-      const response = await fetch(`http://localhost:3001/news/?country=${countryCode}`);
+      const response = await fetch(`https://www.trendsaroundtheworld.com/news/?country=${countryCode}`);
       const json = await response.json();
       const articles = json.articles;
       dispatch(fetchNewsSuccess(articles));
@@ -96,7 +96,7 @@ export const fetchGoogleTrends = countryCode => {
   return async dispatch => {
     dispatch(fetchGoogleTrendsPending());
     try {
-      const response = await fetch(`http://localhost:3001/googletrends/?location=${countryCode}`);
+      const response = await fetch(`https://www.trendsaroundtheworld.com/googletrends/?location=${countryCode}`);
       const json = await response.json();
       dispatch(fetchGoogleTrendsSuccess(json));
     } catch (error) {
