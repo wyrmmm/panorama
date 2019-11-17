@@ -29,11 +29,7 @@ const App = props => {
   const [viewport, setViewport] = useState({
     latitude: countries[currentCountry]["lat"],
     longitude: countries[currentCountry]["lng"],
-    zoom: 5,
-    bearing: 0,
-    pitch: 0,
-    transitionInterpolator: new FlyToInterpolator({ speed: 2 }),
-    transitionDuration: 2000
+    zoom: 5
   });
 
   const [previousCountry, setPreviousCountry] = useState(currentCountry);
@@ -42,7 +38,13 @@ const App = props => {
     setPreviousCountry(currentCountry);
     const latitude = countries[currentCountry]["lat"];
     const longitude = countries[currentCountry]["lng"];
-    setViewport({ ...viewport, latitude, longitude });
+    setViewport({
+      ...viewport,
+      transitionInterpolator: new FlyToInterpolator({ speed: 2 }),
+      transitionDuration: 2000,
+      latitude,
+      longitude
+    });
   }
 
   return (
