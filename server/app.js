@@ -80,6 +80,7 @@ app.get("/googletrends/", async (req, res) => {
     return data;
   });
   res.send(texts);
+  await browser.close();
 });
 
 const port = process.env.PORT || 3001;
