@@ -35,10 +35,9 @@ const News = props => {
   }, [currentCountry]);
 
   const { pending, error } = news;
-  console.log(error);
   if (pending) {
     return (
-      <MapCard css={newsCardStyle} title="Trending Tweets">
+      <MapCard css={newsCardStyle} title="Latest News">
         <Spinner
           css={css`
             height: 100%;
@@ -50,7 +49,7 @@ const News = props => {
 
   if (error) {
     return (
-      <MapCard css={newsCardStyle} title="Trending Tweets">
+      <MapCard css={newsCardStyle} title="Latest News">
         Unable to fetch data for this country.
       </MapCard>
     );

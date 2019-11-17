@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { css, jsx } from "@emotion/core";
 import MapCard from "components/shared/MapCard";
@@ -33,7 +33,7 @@ const GoogleTrends = props => {
   const { pending, error } = googleTrends;
   if (pending) {
     return (
-      <MapCard css={googleTrendsCardStyle} title="Trending Tweets">
+      <MapCard css={googleTrendsCardStyle} title="Google Trends">
         <Spinner
           css={css`
             height: 100%;
@@ -45,7 +45,7 @@ const GoogleTrends = props => {
 
   if (error) {
     return (
-      <MapCard css={googleTrendsCardStyle} title="Trending Tweets">
+      <MapCard css={googleTrendsCardStyle} title="Google Trends">
         Unable to fetch data for this country.
       </MapCard>
     );
