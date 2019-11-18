@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { css, jsx } from "@emotion/core";
 import { Navbar, Alignment } from "@blueprintjs/core";
@@ -12,7 +12,7 @@ import News from "components/News";
 import Tweets from "components/Tweets";
 import GoogleTrends from "components/GoogleTrends";
 import Combined from "components/Combined";
-import { setCountry } from "actions/actions";
+import { setCountry, fetchGoogleTrends, fetchNews, fetchTrendingTweets } from "actions/actions";
 
 const divStyle = css`
   width: 100vw;
@@ -38,6 +38,13 @@ const App = props => {
   });
 
   const [previousCountry, setPreviousCountry] = useState(currentCountry);
+
+  useEffect(() => {
+    const countryCode = countries[currentCountry]["ISO-3166"].toUpperCase();
+    dispatch(fetchGoogleTrends(countryCode));
+    dispatch(fetchNews(countryCode));
+    dispatch(fetchTrendingTweets(countries[currentCountry].id));
+  }, [currentCountry]);
 
   if (currentCountry !== previousCountry) {
     setPreviousCountry(currentCountry);

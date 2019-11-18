@@ -1,9 +1,8 @@
 /** @jsx jsx */
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { css, jsx } from "@emotion/core";
 import MapCard from "components/shared/MapCard";
-import { fetchGoogleTrends } from "actions/actions";
 import { Spinner } from "@blueprintjs/core";
 
 const googleTrendsCardStyle = css`
@@ -23,16 +22,7 @@ const googleTrendsCountStyle = css`
 `;
 
 const GoogleTrends = props => {
-  const {
-    googleTrends,
-    dispatch,
-    countries: { current: currentCountry, available: countries }
-  } = props;
-
-  useEffect(() => {
-    const countryCode = countries[currentCountry]["ISO-3166"].toUpperCase();
-    dispatch(fetchGoogleTrends(countryCode));
-  }, [currentCountry]);
+  const { googleTrends } = props;
 
   const { pending, error } = googleTrends;
   if (pending) {

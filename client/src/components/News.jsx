@@ -27,16 +27,7 @@ const articleAuthorStyle = css`
 `;
 
 const News = props => {
-  const {
-    dispatch,
-    countries: { current: currentCountry, available: countries },
-    news
-  } = props;
-
-  useEffect(() => {
-    const countryCode = countries[currentCountry]["ISO-3166"];
-    dispatch(fetchNews(countryCode));
-  }, [currentCountry]);
+  const { news } = props;
 
   const { pending, error } = news;
   if (pending) {

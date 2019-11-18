@@ -18,15 +18,7 @@ const tweetsCardStyle = css`
 `;
 
 const Tweets = props => {
-  const {
-    tweets,
-    dispatch,
-    countries: { current: currentCountry, available: countries }
-  } = props;
-
-  useEffect(() => {
-    dispatch(fetchTrendingTweets(countries[currentCountry].id));
-  }, [currentCountry]);
+  const { tweets } = props;
 
   const { pending, error } = tweets;
   if (pending) {
