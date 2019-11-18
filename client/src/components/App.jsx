@@ -11,6 +11,7 @@ import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import News from "components/News";
 import Tweets from "components/Tweets";
 import GoogleTrends from "components/GoogleTrends";
+import Combined from "components/Combined";
 import { setCountry } from "actions/actions";
 
 const divStyle = css`
@@ -18,6 +19,10 @@ const divStyle = css`
   height: 100vh;
   display: flex;
   flex-direction: column;
+`;
+
+const mapStyle = css`
+  display: block;
 `;
 
 const App = props => {
@@ -71,6 +76,7 @@ const App = props => {
       </Navbar>
       <ReactMapGL
         {...viewport}
+        css={mapStyle}
         width="100%"
         height="100%"
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
@@ -81,6 +87,7 @@ const App = props => {
       <News />
       <Tweets />
       <GoogleTrends />
+      <Combined />
     </div>
   );
 };

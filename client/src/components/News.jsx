@@ -11,6 +11,10 @@ const newsCardStyle = css`
   left: 24px;
   width: 320px;
   height: 500px;
+  display: none;
+  @media (min-width: 1024px) {
+    display: block;
+  }
 `;
 
 const articleStyle = css`
@@ -50,7 +54,7 @@ const News = props => {
   if (error) {
     return (
       <MapCard css={newsCardStyle} title="Latest News">
-        Unable to fetch data for this country.
+        Unable to fetch news for this country.
       </MapCard>
     );
   }

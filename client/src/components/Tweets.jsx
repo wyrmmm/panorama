@@ -11,6 +11,10 @@ const tweetsCardStyle = css`
   right: 24px;
   width: 250px;
   height: 300px;
+  display: none;
+  @media (min-width: 1024px) {
+    display: block;
+  }
 `;
 
 const Tweets = props => {
@@ -40,7 +44,7 @@ const Tweets = props => {
   if (error) {
     return (
       <MapCard css={tweetsCardStyle} title="Trending Tweets">
-        Unable to fetch data for this country.
+        Unable to fetch tweets for this country.
       </MapCard>
     );
   }

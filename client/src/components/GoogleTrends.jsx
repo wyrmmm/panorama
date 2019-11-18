@@ -11,6 +11,10 @@ const googleTrendsCardStyle = css`
   bottom: 48px;
   width: 250px;
   height: 300px;
+  display: none;
+  @media (min-width: 1024px) {
+    display: block;
+  }
 `;
 
 const googleTrendsCountStyle = css`
@@ -46,7 +50,7 @@ const GoogleTrends = props => {
   if (error) {
     return (
       <MapCard css={googleTrendsCardStyle} title="Google Trends">
-        Unable to fetch data for this country.
+        Unable to fetch trends for this country.
       </MapCard>
     );
   }
