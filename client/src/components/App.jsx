@@ -81,20 +81,26 @@ const App = props => {
           </div>
         </Navbar.Group>
       </Navbar>
-      <ReactMapGL
-        {...viewport}
-        css={mapStyle}
-        width="100%"
-        height="100%"
-        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
-        onViewportChange={viewport => {
-          setViewport(viewport);
-        }}
-      />
-      <News />
-      <Tweets />
-      <GoogleTrends />
-      <Combined />
+      <div
+        css={css`
+          flex: 1;
+        `}
+      >
+        <ReactMapGL
+          {...viewport}
+          css={mapStyle}
+          width="100%"
+          height="100%"
+          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
+          onViewportChange={viewport => {
+            setViewport(viewport);
+          }}
+        />
+        <News />
+        <Tweets />
+        <GoogleTrends />
+        <Combined />
+      </div>
     </div>
   );
 };
